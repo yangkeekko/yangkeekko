@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>图片字幕生成器</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>图片字幕生成器</h1>
+    </header>
+
+    <section class="about">
+      <div class="intro">
+        <span>拖拽或点击左侧上传图片，设置字幕参数后点击“生成字幕图片”即可。</span>
+        <button id="exampleBtn" class="btn btn-secondary">查看示例</button>
+      </div>
+    </section>
+
+    <main class="container">
+      <section class="controls">
+        <div class="field">
+          <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg" hidden aria-hidden="true" tabindex="-1" />
+          <div id="dropzone" class="dropzone" aria-label="拖拽图片到此或点击选择">
+            拖拽图片到此或点击选择
+            <img id="thumb" class="thumb" alt="缩略图" hidden />
+          </div>
+          
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="subtitleHeight">字幕高度(px)</label>
+            <div class="range-input">
+              <input type="range" id="subtitleHeight" value="40" min="20" max="120" />
+              <input type="number" id="subtitleHeightNum" value="40" min="20" max="120" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="fontSize">字体大小(px)</label>
+            <div class="range-input">
+              <input type="range" id="fontSize" value="24" min="12" max="72" />
+              <input type="number" id="fontSizeNum" value="24" min="12" max="72" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="fontColor">字体颜色</label>
+            <div id="fontSwatch" class="color-swatch">
+              <input type="color" id="fontColor" value="#ffffff" />
+              <span id="fontColorVal" class="color-swatch__label">#ffffff</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="strokeColor">轮廓颜色</label>
+            <div id="strokeSwatch" class="color-swatch">
+              <input type="color" id="strokeColor" value="#000000" />
+              <span id="strokeColorVal" class="color-swatch__label">#000000</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="dividerThickness">分割线厚度(px)</label>
+            <input type="number" id="dividerThickness" value="1" min="1" max="4" />
+          </div>
+          <div class="field">
+            <label for="outputWidth">导出宽度(px)</label>
+            <input type="number" id="outputWidth" value="400" min="320" max="4096" />
+          </div>
+          <div class="field">
+            <label for="overlayColor">蒙层颜色</label>
+            <div id="overlaySwatch" class="color-swatch">
+              <input type="color" id="overlayColor" value="#000000" />
+              <span id="overlayColorVal" class="color-swatch__label">#000000</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="overlayOpacity">蒙层透明度(0-1)</label>
+            <div class="range-input">
+              <input type="range" id="overlayOpacity" value="0.4" min="0" max="1" step="0.01" />
+              <input type="number" id="overlayOpacityNum" value="0.40" min="0" max="1" step="0.01" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="subtitleText">字幕文本（每行一条）</label>
+          <textarea id="subtitleText" rows="8" placeholder="在此粘贴或输入字幕，每行一条"></textarea>
+        </div>
+
+        <div class="actions">
+          <button id="generateBtn" class="btn btn-primary" disabled>生成字幕图片</button>
+          <span id="status" class="status"></span>
+        </div>
+      </section>
+
+      <section class="preview">
+        <div id="emptyHint" class="empty-hint">
+          <div>
+            <p>尚未上传图片</p>
+            <p class="muted">请拖拽图片到左侧“拖拽图片到此或点击选择”区域，或点击该区域选择文件</p>
+          </div>
+        </div>
+        <canvas id="previewCanvas"></canvas>
+        <div class="save-area">
+          <button id="saveBtn" class="btn btn-secondary" hidden>保存图片</button>
+        </div>
+      </section>
+
+    <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
+    </main>
+
+    <script src="main.js"></script>
+
+    <!-- 示例弹窗 -->
+    <div id="exampleModal" class="modal-overlay" hidden>
+      <div class="modal">
+        <div class="modal-header">
+          <span>示例效果</span>
+          <button id="exampleClose" class="btn btn-secondary">关闭</button>
+        </div>
+        <canvas id="exampleCanvas"></canvas>
+        <div class="modal-tip">示例来源为任意人物图像，仅示意字幕效果</div>
+      </div>
+    </div>
+  </body>
+</html>

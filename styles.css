@@ -1,0 +1,204 @@
+:root {
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --text: #1f2a37;
+  --muted: #6b778a;
+  --accent: #3b82f6;
+  --border: #e5e7eb;
+}
+
+/* 任何带 hidden 属性的元素强制隐藏，避免组件样式覆盖 */
+[hidden] { display: none !important; }
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Microsoft YaHei", system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+  background:
+    radial-gradient(1200px 600px at 20% -20%, #eef2ff 0%, transparent 60%),
+    radial-gradient(1200px 600px at 80% 120%, #fef3c7 0%, transparent 60%),
+    var(--bg);
+  color: var(--text);
+}
+/* 视觉隐藏：保留在可访问树中但不显示 */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: #ffffffaa;
+  backdrop-filter: saturate(1.2) blur(4px);
+}
+h1 { margin: 0; font-size: 20px; color: #0f172a; }
+
+.container {
+  display: grid;
+  grid-template-columns: 520px 1fr;
+  gap: 16px;
+  padding: 16px;
+  width: min(1200px, 96vw);
+  margin: 0 auto;
+}
+
+.controls {
+  background: var(--panel);
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(2, 16, 60, 0.08);
+}
+
+.field { margin-bottom: 14px; }
+.field label { display: block; margin-bottom: 6px; font-size: 12px; color: var(--muted); }
+.field input[type="number"],
+.field input[type="color"],
+.field input[type="file"],
+.field textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--text);
+}
+.field input:focus,
+.field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,.25); }
+.muted { color: var(--muted); margin-left: 8px; font-size: 12px; display:block; margin-top:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+.value-badge { display:inline-block; margin-left:8px; padding:2px 6px; font-size:12px; color: var(--muted); border:1px solid var(--border); border-radius:8px; background:#fff; }
+
+.color-swatch{ position:relative; height:36px; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.color-swatch::before{ content:""; position:absolute; inset:0; background: var(--swatch-color, #ffffff); }
+.color-swatch input[type="color"]{ position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; }
+.color-swatch__label{ position:absolute; right:8px; top:50%; transform:translateY(-50%); font-size:12px; padding:2px 6px; border-radius:6px; background:rgba(255,255,255,.7); color:#0f172a; border:1px solid rgba(0,0,0,.06); }
+
+/* 显示选中颜色的细条 */
+.color-bar { width:100%; height:6px; border-radius:4px; margin-top:6px; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05); }
+
+/* 滑杆 + 数字输入组合 */
+.range-input { display:flex; gap:10px; align-items:center; }
+.range-input input[type="number"] { width:80px; }
+
+/* 移动端优化的滑杆样式 */
+input[type="range"] { -webkit-appearance: none; appearance: none; height: 4px; background: #dfe5ef; border-radius: 2px; }
+input[type="range"]::-webkit-slider-thumb{ -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); box-shadow: 0 1px 3px rgba(0,0,0,0.25); border: none; }
+input[type="range"]::-moz-range-thumb{ width: 22px; height: 22px; border-radius: 50%; background: var(--accent); border: none; }
+input[type="range"]:active::-webkit-slider-thumb{ transform: scale(1.06); }
+
+/* Toast 提示 */
+.toast { position: fixed; left: 50%; top: 20px; transform: translateX(-50%); background: rgba(33, 40, 53, 0.95); color: #fff; padding: 10px 14px; border-radius: 8px; font-size: 14px; z-index: 9999; box-shadow: 0 6px 20px rgba(0,0,0,0.25); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; }
+.toast.show { opacity: 1; pointer-events: auto; }
+
+/* 产品说明与示例图 */
+.about { padding: 12px 16px; }
+.intro{ margin:0 0 8px 0; color:#0f172a; font-size:13px; background:#fff; border:1px solid var(--border); border-left:4px solid var(--accent); padding:10px 12px; border-radius:10px; box-shadow:0 3px 10px rgba(2,16,60,.05); display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.intro .btn{ padding:6px 10px; font-size:12px; }
+
+/* 拖拽上传区域 */
+.dropzone {
+  margin-top: 8px;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  color: var(--muted);
+  background: #ffffff;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.dropzone:hover { border-color: var(--accent); }
+.dropzone.dragover {
+  background: #eef2ff;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59,130,246,.25);
+}
+.thumb { margin-top: 10px; max-width: 100%; height: auto; border-radius: 8px; border:1px solid var(--border); }
+
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+.actions { display: flex; gap: 12px; align-items: center; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid #2a3442;
+  border-radius: 10px;
+  background: #18202c;
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .06s ease;
+}
+.btn:hover:enabled { border-color: var(--accent); background:#202a38; }
+.btn:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(78,163,255,.45); }
+.btn:active:enabled { transform: translateY(1px); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+
+.btn-primary { background: var(--accent); color: #ffffff; border-color: #3b82f6; }
+.btn-primary:hover:enabled { background:#2563eb; border-color:#2563eb; }
+
+.btn-secondary { background:#ffffff; border-color: var(--border); color: var(--text); }
+.btn-secondary:hover:enabled { background:#f3f4f6; border-color: var(--accent); }
+.status { font-size: 12px; color: var(--muted); }
+
+.preview {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  place-items: start;
+  box-shadow: 0 6px 20px rgba(2, 16, 60, 0.06);
+  position: relative;
+}
+.save-area { position: static; display:flex; justify-content:flex-end; margin-top: 10px; }
+
+/* 预览缺省页：引导上传图片，无交互按钮 */
+.empty-hint{ width:100%; min-height:240px; border:2px dashed var(--border); border-radius:12px; display:grid; place-items:center; text-align:center; background:#fff; }
+.empty-hint .muted{ margin-top:6px; }
+
+#previewCanvas {
+  max-width: 100%;
+  height: auto;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+/* 响应式：手机端堆叠布局与更易点击的控件 */
+@media (max-width: 768px) {
+  .container { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr; }
+  .actions { flex-wrap: wrap; }
+  .actions .btn { width: 100%; }
+  /* 提示卡在手机端纵向排列并居中显示 */
+  .intro{ flex-direction: column; align-items:center; text-align:center; gap:6px; }
+  .intro .btn{ width:auto; }
+  header { padding: 12px 16px; }
+  h1 { font-size: 18px; }
+  .about { padding: 8px 12px; text-align:center; }
+  .controls { padding: 12px; }
+  .field input, .field textarea { font-size: 16px; }
+}
+/* 弹窗样式 */
+.modal-overlay{ position:fixed; inset:0; background:rgba(16,23,34,.45); display:flex; align-items:center; justify-content:center; z-index:10000; }
+.modal{ width:min(900px, 92vw); max-width:900px; background:#fff; border-radius:12px; box-shadow:0 20px 50px rgba(0,0,0,.25); border:1px solid var(--border); padding:12px; max-height:90vh; overflow:auto; display:flex; flex-direction:column; }
+.modal-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; position:sticky; top:0; background:#fff; z-index:100; padding-bottom:8px; border-bottom:1px solid var(--border); box-shadow:0 6px 12px rgba(16,23,34,.06); }
+.modal-tip{ color:var(--muted); font-size:12px; margin-top:8px; }
+#exampleCanvas{ width:100%; height:auto; background:#fafafa; border-radius:8px; }
+/* 让示例弹窗画布在可用空间内居中 */
+#exampleCanvas{ display:block; margin:0 auto; }
+/* PC端：示例图最大宽度限制为400 */
+@media (min-width: 769px){
+  #exampleCanvas{ max-width:400px; width:100%; }
+}
