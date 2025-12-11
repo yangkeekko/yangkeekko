@@ -80,6 +80,8 @@
     els.save.disabled = !state.hasGenerated;
     if (els.save) els.save.hidden = !state.hasGenerated;
     if (els.emptyHint) els.emptyHint.hidden = !!state.img;
+    // 未选择图片时隐藏预览画布，避免出现灰色占位块
+    if (els.canvas) els.canvas.hidden = !hasImg;
   }
 
   function drawWithDPR(imgW, imgH, drawFn) {

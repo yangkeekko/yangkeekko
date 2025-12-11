@@ -175,9 +175,11 @@ input[type="range"]:active::-webkit-slider-thumb{ transform: scale(1.06); }
   border-radius: 8px;
 }
 
-/* 响应式：手机端堆叠布局与更易点击的控件 */
-@media (max-width: 768px) {
-  .container { grid-template-columns: 1fr; }
+/* 响应式：中小屏堆叠布局与更易点击的控件 */
+@media (max-width: 900px) {
+  /* 防止移动端横向溢出导致无法完全显示 */
+  html, body { overflow-x: hidden; }
+  .container { grid-template-columns: 1fr; justify-items: center; }
   .grid { grid-template-columns: 1fr; }
   .actions { flex-wrap: wrap; }
   .actions .btn { width: 100%; }
@@ -187,6 +189,8 @@ input[type="range"]:active::-webkit-slider-thumb{ transform: scale(1.06); }
   header { padding: 12px 16px; }
   h1 { font-size: 18px; }
   .about { padding: 8px 12px; text-align:center; }
+  /* 统一限宽并居中主要内容块，避免过宽导致无法完整显示 */
+  .controls, .preview, .about { width: 100%; max-width: 460px; margin: 0 auto; }
   .controls { padding: 12px; }
   .field input, .field textarea { font-size: 16px; }
 }
